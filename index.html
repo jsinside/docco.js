@@ -14,9 +14,7 @@
     <!-- Le styles -->
 	<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-	<link href="sons-of-obsidian.css" rel="stylesheet">
-<!--	<link href="desert.css" rel="stylesheet">
--->    <style>
+    <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
@@ -59,16 +57,9 @@
 	<script src="parseDocco.js"></script>	
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
 
-	<style>
-		[data-type=code] {
-			background: black;
-		}
-		table {
-			border-spacing: 0px;
-		}
-	</style>
 	<script type="text/mytempl" id="mytempl">
 		<table class="table table-condensed">
+			<% var lineNum = 1; %>
 			<% sections.forEach(function(section, idx){	%>
 				<%= idx % 2 === 0 ? "<tr>" : "" %>
 				<%= "<td data-type='"+section.type+"'>" %> 
@@ -77,16 +68,14 @@
 							<%= section.html %>
 						</div>
 					<% }else if(section.type === "code" ){ %>
-						<pre class='span8 prettyprint'><%= section.text %></pre>
-					<% }else if(section.type === "code" ){ %>
-						<div class='span8'>
-							<% if( section.text.match(/^\s*$/) ){ %>
-								&nbsp;
-							<% }else{ %>
-								<pre class="prettyprint linenums"><%= section.text %></pre>
-							<% } %>
-						</div>
-					<% } %>
+						<% var codeIsEmpty = section.text.match(/^[\s\n]*$/) ? true : false; %>
+						<% if( codeIsEmpty === false ){ %>
+							<pre class='span8 prettyprint <%= codeIsEmpty ? '' : 'linenums:'+lineNum %>'><%= section.text %></pre>
+							<% lineNum += section.text.match(/\n/g) ? section.text.match(/\n/g).length : 0; %>
+						<% }else{ %>
+							<pre class='span8'></pre>
+						<% } %>
+					<% }else console.assert(false, 'invalid type'); %>
 				<%= "</td>" %> 
 				<%= idx % 2 === 1 ? "</tr>" : "" %>
 			<% }); %>
@@ -97,8 +86,8 @@
 		var text	= null;
 		jQuery(function(){
 			var url	= location.hash ? location.hash.substr(1) : null;
-			//url	= url	|| "examples/index.html";
-			url	= url	|| "examples/minimal.html";
+			url	= url	|| "examples/index.html";
+			//url	= url	|| "examples/minimal.html";
 			jQuery.get(url, function(text){
 				var sections	= parseDocco(text);
 				console.log("sections", sections);
