@@ -97,16 +97,18 @@
 		var text	= null;
 		jQuery(function(){
 			var url	= "examples/index.html";
+			//var url	= "examples/minimal.html";
 			jQuery.get(url, function(text){
 				var sections	= parseDocco(text);
 				console.log("sections", sections);
-	
+				
+				if( sections[0].type === "code"){					
+					sections.unshift({type : "comment",text : "",html : ""});
+				}
+				
 				var textTmpl	= document.getElementById('mytempl').innerText;
-				//console.log("tmpl", textTmpl);
-	
 				var html	= _.template(textTmpl, {sections: sections});
-				var container	= document.getElementById('doccoContainer');
-				container.innerHTML	= html;
+				document.getElementById('doccoContainer').innerHTML	= html;
 				
 				prettyPrint();
 			}, 'text');
