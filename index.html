@@ -96,8 +96,9 @@
 	<script>
 		var text	= null;
 		jQuery(function(){
-			var url	= "examples/index.html";
-			//var url	= "examples/minimal.html";
+			var url	= location.hash ? location.hash.substr(1) : null;
+			//url	= url	|| "examples/index.html";
+			url	= url	|| "examples/minimal.html";
 			jQuery.get(url, function(text){
 				var sections	= parseDocco(text);
 				console.log("sections", sections);
