@@ -35,8 +35,8 @@ function parseDocco(text, separators){
 		if( section.type === "code" && prettyPrintOne ){
 			section.text	= section.text.replace(/</g, '&lt;');
 			section.text	= section.text.replace(/>/g, '&gt;');
+			section.text	= section.text.replace(/\t/g, '  ');
 			section.html	= prettyPrintOne(section.text);
-			
 		}else if( section.type === "comment" && Showdown ){
 			section.html	= new Showdown.converter().makeHtml(section.text);
 			section.html	= section.html.replace(/<br ?\/>/g, ' ');

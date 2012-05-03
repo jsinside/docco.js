@@ -106,9 +106,9 @@
 		segmentsW	: 100,	// number of segment in width
 		segmentsH	: 100	// number of segment in Height
 	}).addTo(world).scaleBy(100);
-	
+
 	// # The Character 
-	
+
 	// We use ```tQuery.RatamahattaMD2Character``` plugin. Its inherits from
 	// ```tQuery.MD2Character``` plugin. All the configuration for this particular
 	// character ```ratamahatta``` is already done for you.
@@ -117,7 +117,7 @@
 	// This function is part of
 	// [keyboard plugins for ratamahatta](../../tquery.md2character.ratamahatta.keyboard.js)
 	var character	= new tQuery.RatamahattaMD2Character().attach(world).hookKeyboard();
-	
+
 	// Here we show an example of binding the "loaded" event.
 	// It is notified once the whole characters data are loaded (texture, mesh for animations of
 	// body and weapons). It just display the name of the available animations.
