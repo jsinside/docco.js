@@ -24,12 +24,10 @@ function parseDocco(text){
 	})
 	// go thru each sections to htmlize it
 	sections.forEach(function(section){
-		if( section.type === "code" ){
-			// use prettyprint
+		if( section.type === "code" && prettyPrintOne ){
 			section.html	= prettyPrintOne(section.text);
-		}else if( section.type === "comment" ){
-			// use showdown
-			section.html	= new Showdown.converter().makeHtml(section.text);		
+		}else if( section.type === "comment" && Showdown ){
+			section.html	= new Showdown.converter().makeHtml(section.text);						
 		}
 	});
 	return sections;
