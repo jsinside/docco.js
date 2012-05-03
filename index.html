@@ -66,11 +66,11 @@
 				<%= idx % 2 === 0 ? "<tr>" : "" %>
 				<%= "<td>" %> 
 					<% if(section.type === "comment" ){ %>
-						<div class='span4 comment'>
+						<div class='span5 comment'>
 							<%= section.html %>
 						</div>
 					<% }else if(section.type === "code" ){ %>
-						<div class='span8'>
+						<div class='span7'>
 							<% if( section.text.match(/^\s*$/) ){ %>
 								&nbsp;
 							<% }else{ %>
@@ -87,13 +87,13 @@
 	<script>
 		var text	= null;
 		jQuery(function(){
-			var url	= "examples/index.js";
+			var url	= "examples/index.html";
 			jQuery.get(url, function(text){
 				var sections	= parseDocco(text);
 				console.log("sections", sections);
 	
 				var textTmpl	= document.getElementById('mytempl').innerText;
-				console.log("tmpl", textTmpl);
+				//console.log("tmpl", textTmpl);
 	
 				var html	= _.template(textTmpl, {sections: sections});
 				var container	= document.getElementById('doccoContainer');

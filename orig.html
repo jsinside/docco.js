@@ -13,9 +13,9 @@
 	<% console.log(sections); %>
 	<% sections.forEach(function(section){	%>
 		<% console.log(section);	%>
-		<% if(section.type === "comment" ){ %>
+		<% if( section.type === "comment" ){ %>
 			<%= "<div>"+section.html+"</div>" %>
-		<% }else if(section.type === "comment" ){ %>
+		<% }else if( section.type === "comment" ){ %>
 			<%= "<div>"+section.html+"</div>" %>
 		<% } %>
 	<% }); %>
