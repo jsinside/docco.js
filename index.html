@@ -46,7 +46,7 @@
 	<script type="text/mytempl" id="mytempl">
 		<table class="table table-condensed">
 			<% var lineNum = 1; %>
-			<% sections.forEach(function(section, idx){	%>
+			<% sections.forEach(function(section, idx){ %>
 				<%= idx % 2 === 0 ? "<tr>" : "" %>
 				<%= "<td data-type='"+section.type+"'>" %>
 					<% if(section.type === "comment" ){ %>
@@ -69,22 +69,22 @@
 	</script>
 
 	<script>
-		var text	= null;
+		var text = null;
 		jQuery(function(){
-			var url	= location.hash ? location.hash.substr(1) : null;
-			url	= url	|| "examples/index.html";
-			//url	= url	|| "examples/minimal.html";
+			var url = location.hash ? location.hash.substr(1) : null;
+			url = url || "examples/index.html";
+			//url = url || "examples/minimal.html";
 			jQuery.get(url, function(text){
-				var sections	= parseDocco(text);
+				var sections = parseDocco(text);
 				console.log("sections", sections);
 
 				if( sections[0].type === "code"){
 					sections.unshift({type : "comment",text : "",html : ""});
 				}
 
-				var textTmpl	= document.getElementById('mytempl').innerText;
-				var html	= _.template(textTmpl, {sections: sections});
-				document.getElementById('doccoContainer').innerHTML	= html;
+				var textTmpl = document.getElementById('mytempl').innerText;
+				var html     = _.template(textTmpl, {sections: sections});
+				document.getElementById('doccoContainer').innerHTML = html;
 
 				prettyPrint();
 			}, 'text');
