@@ -1,10 +1,10 @@
 docco.js
 ========
 
-a clean version of docc
+A clean version of [Docco](http://ashkenas.com/docco/)
 
-docco got an interesting format of markdown + source.
-It is great to document short examples, mini application.
-The implementation is old and rather hackish.
+Docco uses an interesting format of markdown + source code.
+It is great to document short examples and small applications.
 
-This intend to be a more flexible, cleaner implementation of the same format.
+However, the implementation is old and rather hackish.
+This intends to be a more flexible, cleaner implementation of the same format.
