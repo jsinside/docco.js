@@ -66,7 +66,6 @@
 			//url = url || "examples/minimal.html";
 			jQuery.get(url, function(text){
 				var sections = parseDocco(text);
-				console.log("sections", sections);
 
 				if( sections[0].type === "code"){
 					sections.unshift({type : "comment",text : "",html : ""});
