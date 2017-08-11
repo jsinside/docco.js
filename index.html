@@ -38,10 +38,9 @@
 	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-carousel.js"></script>
 	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-typeahead.js"></script>
 
-
 	<script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>
 	<script src="https://raw.github.com/github/github-flavored-markdown/gh-pages/scripts/showdown.js"></script>
-	<script src="parseDocco.js"></script>	
+	<script src="parseDocco.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
 
 	<script type="text/mytempl" id="mytempl">
@@ -49,7 +48,7 @@
 			<% var lineNum = 1; %>
 			<% sections.forEach(function(section, idx){	%>
 				<%= idx % 2 === 0 ? "<tr>" : "" %>
-				<%= "<td data-type='"+section.type+"'>" %> 
+				<%= "<td data-type='"+section.type+"'>" %>
 					<% if(section.type === "comment" ){ %>
 						<div class='span4 comment'>
 							<%= section.html %>
@@ -63,12 +62,12 @@
 							<pre class='span8'></pre>
 						<% } %>
 					<% }else console.assert(false, 'invalid type'); %>
-				<%= "</td>" %> 
+				<%= "</td>" %>
 				<%= idx % 2 === 1 ? "</tr>" : "" %>
 			<% }); %>
 		</table>
 	</script>
-	
+
 	<script>
 		var text	= null;
 		jQuery(function(){
@@ -78,15 +77,15 @@
 			jQuery.get(url, function(text){
 				var sections	= parseDocco(text);
 				console.log("sections", sections);
-				
-				if( sections[0].type === "code"){					
+
+				if( sections[0].type === "code"){
 					sections.unshift({type : "comment",text : "",html : ""});
 				}
-				
+
 				var textTmpl	= document.getElementById('mytempl').innerText;
 				var html	= _.template(textTmpl, {sections: sections});
 				document.getElementById('doccoContainer').innerHTML	= html;
-				
+
 				prettyPrint();
 			}, 'text');
 		})
