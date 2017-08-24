@@ -1,33 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Docco.js</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
+<head>
+	<meta charset="utf-8">
+	<title>Docco.js</title>
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+	<!-- Le styles -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.4/css/bootstrap.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.4/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.css" rel="stylesheet">
+	<style>
+		body {
+			padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+		}
+	</style>
+</head>
 
-    <!-- Le styles -->
-	<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
-	<link href="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="images/favicon.ico">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-  </head>
-
-  <body>
+<body>
 
 	<div class="container">
 		<div class="row" id="doccoContainer">
@@ -37,32 +25,20 @@
 	<!-- Le javascript
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-button.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-carousel.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-typeahead.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.4/js/bootstrap.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/0.0.1/showdown.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore.js"></script>
 
-
-	<script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>
-	<script src="https://raw.github.com/github/github-flavored-markdown/gh-pages/scripts/showdown.js"></script>
-	<script src="parseDocco.js"></script>	
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
+	<script src="parseDocco.js"></script>
 
 	<script type="text/mytempl" id="mytempl">
 		<table class="table table-condensed">
 			<% var lineNum = 1; %>
-			<% sections.forEach(function(section, idx){	%>
+			<% sections.forEach(function(section, idx){ %>
 				<%= idx % 2 === 0 ? "<tr>" : "" %>
-				<%= "<td data-type='"+section.type+"'>" %> 
+				<%= "<td data-type='"+section.type+"'>" %>
 					<% if(section.type === "comment" ){ %>
 						<div class='span4 comment'>
 							<%= section.html %>
@@ -76,34 +52,33 @@
 							<pre class='span8'></pre>
 						<% } %>
 					<% }else console.assert(false, 'invalid type'); %>
-				<%= "</td>" %> 
+				<%= "</td>" %>
 				<%= idx % 2 === 1 ? "</tr>" : "" %>
 			<% }); %>
 		</table>
 	</script>
-	
+
 	<script>
-		var text	= null;
+		var text = null;
 		jQuery(function(){
-			var url	= location.hash ? location.hash.substr(1) : null;
-			url	= url	|| "examples/index.html";
-			//url	= url	|| "examples/minimal.html";
+			var url = location.hash ? location.hash.substr(1) : null;
+			url = url || "examples/index.html";
+			//url = url || "examples/minimal.html";
 			jQuery.get(url, function(text){
-				var sections	= parseDocco(text);
-				console.log("sections", sections);
-				
-				if( sections[0].type === "code"){					
+				var sections = parseDocco(text);
+
+				if( sections[0].type === "code"){
 					sections.unshift({type : "comment",text : "",html : ""});
 				}
-				
-				var textTmpl	= document.getElementById('mytempl').innerText;
-				var html	= _.template(textTmpl, {sections: sections});
-				document.getElementById('doccoContainer').innerHTML	= html;
-				
+
+				var textTmpl = document.getElementById('mytempl').innerText;
+				var html     = _.template(textTmpl, {sections: sections});
+				document.getElementById('doccoContainer').innerHTML = html;
+
 				prettyPrint();
 			}, 'text');
 		})
 	</script>
 
-  </body>
+</body>
 </html>
